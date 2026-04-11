@@ -12,6 +12,8 @@
 | `AGENTS.md` | AI agent ground rules and operating manual |
 | `PRD.md` | Product Requirements Document template |
 | `NEXT_ACTION.md` | The one thing to do next (instant session startup) |
+| `CHANGELOG.md` | Template evolution and breaking changes |
+| `.env.example` | Environment variable template |
 | `CONTEXT_LOG.md` | Append-only execution journal (source of truth) |
 | `STATE.md` | Current task state and success criteria |
 | `LOGS.md` | Chronological completion log |
@@ -36,6 +38,9 @@
 | `docs/INTERFACES.md` | Interface contracts between components |
 | `docs/adr/README.md` | Architecture Decision Record index |
 | `docs/adr/000-template.md` | Architecture Decision Record template |
+| `docs/adr/001-no-orm.md` | ADR: No ORM in the base template |
+| `docs/adr/002-jest-over-vitest.md` | ADR: Use Jest over Vitest |
+| `docs/adr/003-branch-based-workflow.md` | ADR: Branch-based workflow |
 
 ### docs/checklists/
 
@@ -66,5 +71,12 @@
 
 | File | Purpose |
 |------|---------|
+| `memory/TEMPLATE.md` | Template for topical memory entries |
 | `memory/YYYY-MM-DD.md` | Dated decision records (append-only) |
-| `memory/2026-04-10.md` | Initial pipeline creation decisions |
+| `memory/2026-04-10.md` | Topical memory index |
+| `memory/2026-04-10-template-creation.md` | Why the template was created |
+| `memory/2026-04-10-agent-reasoning.md` | Agent reasoning, states, mental models |
+| `memory/2026-04-10-testing-philosophy.md` | Testing philosophy and simulation |
+| `memory/2026-04-10-ui-ux-design.md` | UI/UX phase and anti-test-gaming |
+| `memory/2026-04-10-script-hardening.md` | Shell script robustness and clean exits |
+| `memory/2026-04-10-maintainability.md` | Document index and long-term maintainability |

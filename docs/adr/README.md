@@ -10,11 +10,11 @@ For agents and humans dropping into this project: check this index before re-lit
 
 | ID | Decision | Status | Where to Read |
 |----|----------|--------|---------------|
-| ADR-001 | Use Terraform instead of AWS CDK for infrastructure | Accepted | [`enterprise-pipeline/PRD.md` §9](../../enterprise-pipeline/PRD.md) |
-| ADR-002 | Use ECS Fargate instead of EKS for container orchestration | Accepted | [`enterprise-pipeline/PRD.md` §9](../../enterprise-pipeline/PRD.md) |
-| ADR-003 | Use branch-based workflow instead of GitHub branch protection rules | Accepted | [`memory/2026-04-10.md`](../../memory/2026-04-10.md) |
-| ADR-004 | Integrate Impeccable design standards into UI/UX phase | Accepted | [`memory/2026-04-10.md`](../../memory/2026-04-10.md) |
-| ADR-005 | Keep `enterprise-pipeline/` as a local workspace, not part of this template repo | Accepted | [`memory/2026-04-10.md`](../../memory/2026-04-10.md) + [`.gitignore`](../../.gitignore) |
+| ADR-001 | No ORM in the base template | Accepted | [`docs/adr/001-no-orm.md`](001-no-orm.md) |
+| ADR-002 | Use Jest over Vitest for the reference test suite | Accepted | [`docs/adr/002-jest-over-vitest.md`](002-jest-over-vitest.md) |
+| ADR-003 | Use branch-based workflow instead of GitHub branch protection | Accepted | [`docs/adr/003-branch-based-workflow.md`](003-branch-based-workflow.md) |
+| ADR-004 | Integrate Impeccable design standards into UI/UX phase | Accepted | [`memory/2026-04-10-ui-ux-design.md`](../../memory/2026-04-10-ui-ux-design.md) |
+| ADR-005 | Keep `enterprise-pipeline/` as a local workspace, not part of this template repo | Accepted | [`memory/2026-04-10-maintainability.md`](../../memory/2026-04-10-maintainability.md) + [`.gitignore`](../../.gitignore) |
 
 ---
 
