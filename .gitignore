@@ -42,3 +42,4 @@ temp/
 
 # Agent local state
 .kimi/
+enterprise-pipeline/
