@@ -33,6 +33,7 @@
 | `docs/ANTI_TEST_GAMING.md` | Safeguards against test-gaming code |
 | `docs/TESTING.md` | Atomic and exhaustive testing philosophy |
 | `docs/INTERFACES.md` | Interface contracts between components |
+| `docs/adr/README.md` | Architecture Decision Record index |
 | `docs/adr/000-template.md` | Architecture Decision Record template |
 
 ### docs/checklists/
