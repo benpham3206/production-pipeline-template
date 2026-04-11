@@ -75,6 +75,15 @@ fi
 # Ensure scripts are executable
 chmod +x scripts/*.sh
 
+# Install git hooks (local safety net for no-direct-push-to-main)
+if [ -d ".git" ]; then
+  git config core.hooksPath .githooks
+  chmod +x .githooks/pre-push 2>/dev/null || true
+  echo "✅ Installed git hooks (.githooks/pre-push)"
+else
+  echo "⚠️  No .git directory found — skipping git hook installation"
+fi
+
 echo ""
 echo "✅ Project structure validated."
 echo ""
