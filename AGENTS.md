@@ -231,6 +231,7 @@ Ask the human immediately if:
 - The same error occurs 3+ times
 - You need to violate an interface or checklist
 - You're unsure about a security decision
+- You are making an important decision that affects architecture, scope, or user experience
 - The PRD and reality have diverged
 - You detect a `.recovery_needed` flag and cannot restore state automatically
 
