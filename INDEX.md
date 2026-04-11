@@ -19,6 +19,7 @@
 | `LOGS.md` | Chronological completion log |
 | `MEMORY.md` | Project memory: decisions, mistakes, wins |
 | `ERRORS.md` | Error log and patterns to remember |
+| `SECURITY.md` | Security policy and vulnerability reporting |
 | `INDEX.md` | This file — catalog of all markdown documents |
 
 ---
@@ -27,15 +28,16 @@
 
 | File | Purpose |
 |------|---------|
-| `docs/PROCESS.md` | Agentic / human collaboration workflow |
+| `docs/PROCESS.md` | The agentic/human collaboration workflow |
 | `docs/AGENT_REASONING.md` | 5-gate reasoning protocol for AI agents |
-| `docs/AGENT_STATES.md` | Agent state machine and transitions |
+| `docs/AGENT_STATES.md` | Agent state machine and transitions (4 states) |
 | `docs/MENTAL_MODELS.md` | Mental models quick reference |
 | `docs/UI_UX.md` | UI/UX design phase and feedback loops |
 | `docs/DESIGN_DOC.md` | Design document philosophy and constraints |
 | `docs/ANTI_TEST_GAMING.md` | Safeguards against test-gaming code |
 | `docs/TESTING.md` | Atomic and exhaustive testing philosophy |
 | `docs/INTERFACES.md` | Interface contracts between components |
+| `docs/TECHNOLOGY_SELECTION.md` | Technology stack and architecture approval |
 | `docs/adr/README.md` | Architecture Decision Record index |
 | `docs/adr/000-template.md` | Architecture Decision Record template |
 | `docs/adr/001-no-orm.md` | ADR: No ORM in the base template |
@@ -49,6 +51,13 @@
 | `docs/checklists/SECURITY.md` | 30 security rules + AI security review |
 | `docs/checklists/FUNCTIONALITY.md` | Production readiness checklist |
 | `docs/checklists/PRE_SHIP.md` | Final go-live checklist |
+| `docs/checklists/ACCESSIBILITY.md` | WCAG 2.1 AA checklist |
+| `docs/checklists/PERFORMANCE.md` | Load testing and optimization checklist |
+| `docs/checklists/OBSERVABILITY.md` | Logging, metrics, alerting, tracing |
+| `docs/checklists/RELIABILITY.md` | Graceful degradation, retries, backups |
+| `docs/checklists/OPERATIONS.md` | Deployment, incident response, maintenance |
+| `docs/checklists/COMPLIANCE.md` | GDPR, CCPA, SOC 2, HIPAA, PCI-DSS |
+| `docs/checklists/COST_MANAGEMENT.md` | Budgets, caps, right-sizing |
 
 ### docs/templates/
 
@@ -58,7 +67,7 @@
 | `docs/templates/intervention.md` | Intervention log template |
 | `docs/templates/post-mortem.md` | Post-mortem template |
 | `docs/templates/ui-spec.md` | UI specification template |
-| `docs/templates/test-spec.md` | Test specification template |
+| `docs/templates/test-spec.md` | Test definition template |
 | `docs/templates/design-doc.md` | Design document template |
 | `docs/templates/code-review.md` | Code review checklist template |
 | `docs/templates/bug-report.md` | Bug report template with edge case tracking |

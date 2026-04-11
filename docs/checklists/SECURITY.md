@@ -6,13 +6,13 @@
 
 ## Authentication & Identity
 
-- [ ] **1. Never Build Auth Yourself**
-  - Use Clerk, Supabase Auth, or Auth0
-  - No DIY JWT handling, password hashing, or session management
+- [ ] **1. Use Managed Auth**
+  - Production systems must use a managed provider: AWS Cognito, Clerk, Supabase Auth, or Auth0
+  - DIY JWT auth is acceptable **only** for templates without real users (see ADR 001, superseded by ADR 002)
 
 - [ ] **2. Session Expiration & Refresh**
-  - JWT max 7 days
-  - Refresh token rotation enabled
+  - Cognito / managed provider tokens: access ≤ 1 hour, refresh ≤ 30 days
+  - Token revocation handled by the provider, not custom code
 
 ---
 
