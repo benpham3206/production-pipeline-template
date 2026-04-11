@@ -90,6 +90,7 @@ git push origin your-branch-name
 .
 ├── AGENTS.md                # AI agent onboarding & ground rules
 ├── PRD.md                   # Product Requirements Document (template)
+├── NEXT_ACTION.md           # The one thing to do next (instant session startup)
 ├── CONTEXT_LOG.md           # Append-only execution journal (source of truth)
 ├── STATE.md                 # Current task state & success criteria
 ├── LOGS.md                  # Chronological completion log
