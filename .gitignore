@@ -42,3 +42,7 @@ temp/
 
 # Agent local state
 .kimi/
+
+# Project workspaces built from this template
+enterprise-pipeline/
+enterprise-pipeline/
