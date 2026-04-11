@@ -39,4 +39,14 @@
 
 ## Entries
 
-*(None yet — this is a new project.)*
+### [2026-04-10] Branch-Based Workflow beats GitHub Branch Protection
+
+On free private GitHub accounts, the "Require status checks to pass before merging" branch protection option may not be available. **The workaround is process, not platform settings:**
+- Always create a branch before making changes: `git checkout -b your-branch-name`
+- Never push directly to `main`
+- Open a Pull Request and wait for the green checkmark (CI / Test & Build)
+- Merge only after tests pass
+- The `.githooks/pre-push` hook installed by `init-project.sh` blocks accidental direct pushes to `main`
+
+**Lesson:** A local git hook + disciplined habit is just as safe as a GitHub UI toggle, and it works everywhere.
+
