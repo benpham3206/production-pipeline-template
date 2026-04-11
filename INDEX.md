@@ -11,6 +11,7 @@
 | `README.md` | Human onboarding and project overview |
 | `AGENTS.md` | AI agent ground rules and operating manual |
 | `PRD.md` | Product Requirements Document template |
+| `NEXT_ACTION.md` | The one thing to do next (instant session startup) |
 | `CONTEXT_LOG.md` | Append-only execution journal (source of truth) |
 | `STATE.md` | Current task state and success criteria |
 | `LOGS.md` | Chronological completion log |

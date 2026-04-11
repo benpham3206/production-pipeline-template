@@ -12,6 +12,21 @@ If an interface needs to change, create an Architecture Decision Record (ADR) in
 
 ---
 
+## Interface Drift Warning
+
+`INTERFACES.md` decays faster than any other doc. Code moves; docs lag.
+
+**Prevention:**
+- Update this file **before** modifying a public API or component boundary
+- Treat interface changes as contract changes — they affect every consumer
+
+**Audit (recommended):**
+Add a lightweight test or lint rule that verifies every exported function/class in `src/` has a corresponding entry in `INTERFACES.md`. This is hard to do reliably in shell scripts, but reasonable as a static analysis test (e.g., Vitest or ESLint custom rule).
+
+**Current status:** ⬜ Drift audit not yet implemented
+
+---
+
 ## Interface Template
 
 ```typescript

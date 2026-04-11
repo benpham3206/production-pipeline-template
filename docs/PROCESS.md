@@ -242,6 +242,8 @@ Append to `CONTEXT_LOG.md`:
 ```
 ```
 
+**For long sessions:** After ~20-25 turns, update `CONTEXT_LOG_SUMMARY.md` with a condensed snapshot of the current state so future agents can onboard without reading 1000 lines.
+
 ### Execution
 Perform the work. Save files after each logical unit.
 
@@ -409,4 +411,22 @@ An agent may skip the full workflow ONLY if:
 3. It's documentation-only changes
 4. There's a critical production incident
 
-Even then, document the change in `CONTEXT_LOG.md` and `MEMORY.md`.
+### Fast-Path Complexity Threshold
+
+To remove the friction of deciding "is this small enough to skip?", use this rule:
+
+> **If the change touches ≤ 2 existing functions, introduces no new user-visible states, and requires no new tests → skip straight to INTENT → EXECUTE.**
+
+Examples that qualify:
+- Fix a null check in one function
+- Update a constant or configuration value
+- Correct a typo in error message copy
+- Rename an internal variable for clarity
+
+Examples that do **not** qualify:
+- Adding a new button or screen
+- Changing an API response shape
+- Introducing a new dependency
+- Any change that needs a new test case
+
+Even on the fast path, document the change in `CONTEXT_LOG.md` and `MEMORY.md`.

@@ -42,15 +42,16 @@ Before starting ANY task, read in this exact order:
 
 1. `AGENTS.md` (this file)
 2. `docs/AGENT_REASONING.md` — your pre-response gates
-3. `STATE.md` — current task state
-4. `MEMORY.md`
-5. `ERRORS.md`
-6. `PRD.md`
-7. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
-8. `docs/PROCESS.md`
-9. `docs/INTERFACES.md` (if working on component boundaries)
-10. `docs/adr/README.md` (before making or changing architectural decisions)
-11. Relevant checklists in `docs/checklists/`
+3. `NEXT_ACTION.md` — the one thing to do next (instant startup)
+4. `STATE.md` — current task state
+5. `MEMORY.md`
+6. `ERRORS.md`
+7. `PRD.md`
+8. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
+9. `docs/PROCESS.md`
+10. `docs/INTERFACES.md` (if working on component boundaries)
+11. `docs/adr/README.md` (before making or changing architectural decisions)
+12. Relevant checklists in `docs/checklists/`
 
 ---
 
@@ -221,6 +222,7 @@ A task is NOT done until:
 - [ ] `CONTEXT_LOG.md` updated
 - [ ] `LOGS.md` updated
 - [ ] `STATE.md` updated
+- [ ] `NEXT_ACTION.md` updated
 - [ ] `MEMORY.md` or `memory/YYYY-MM-DD.md` updated (if needed)
 
 ---

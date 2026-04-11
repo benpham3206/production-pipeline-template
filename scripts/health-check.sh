@@ -34,6 +34,7 @@ check() {
 # Structure checks
 check "AGENTS.md exists" "[ -f AGENTS.md ]"
 check "PRD.md exists" "[ -f PRD.md ]"
+check "NEXT_ACTION.md exists" "[ -f NEXT_ACTION.md ]"
 check "CONTEXT_LOG.md exists" "[ -f CONTEXT_LOG.md ]"
 check "STATE.md exists" "[ -f STATE.md ]"
 check "LOGS.md exists" "[ -f LOGS.md ]"
