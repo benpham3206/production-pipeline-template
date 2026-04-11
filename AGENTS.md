@@ -82,7 +82,10 @@ State which model you're using and why in your INTENT log.
 
 ### 2. PRD
 - Draft or review `PRD.md`
-- Get human approval before UI/UX
+- Update PRD status to **Ready for Review**
+- **Stop and wait for human approval**
+- Only the human may mark the PRD **Approved**
+- Once approved, proceed to UI/UX
 
 ### 3. UI/UX
 - Design flows, screens, copy using `docs/UI_UX.md`

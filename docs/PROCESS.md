@@ -115,12 +115,27 @@ Before any work, the agent must:
 - Draft `PRD.md` using the template
 - Ensure every success criterion is measurable
 - Ensure out-of-scope is explicitly defined
+- **Update PRD status to `Ready for Review` when drafting is complete**
+- **Stop and wait for human approval — do not proceed to UI/UX unilaterally**
 
 ### Gate
 **No UI/UX design until PRD is approved.**
 **No test definition until UI/UX is approved.**
 **No design document until tests are defined.**
 **No code until design document is approved.**
+
+### PRD Status Flow
+```
+Draft (agent working)
+    ↓
+Ready for Review (agent hands to human)
+    ↓
+Approved (human says go)
+    ↓
+UI/UX → Tests → Design Doc → Code → Review → Verify → Ship
+    ↓
+Implemented (closeout)
+```
 
 ---
 
