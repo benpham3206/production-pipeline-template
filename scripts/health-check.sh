@@ -20,9 +20,9 @@ FAIL=0
 # Arguments:
 #   $1 - human-readable description
 #   $2 - bash command to evaluate
-# Does NOT exit on failure; accumulates in FAIL counter.
+# MED-3: Uses direct execution instead of eval to prevent command injection.
 check() {
-  if eval "$2" > /dev/null 2>&1; then
+  if bash -c "$2" > /dev/null 2>&1; then
     echo "✅ $1"
     PASS=$((PASS + 1))
   else

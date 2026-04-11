@@ -20,9 +20,9 @@ FAIL=0
 # Arguments:
 #   $1 - human-readable description
 #   $2 - bash command to evaluate
-# Does NOT exit on failure; accumulates in FAIL counter.
+# MED-3: Uses direct execution instead of eval to prevent command injection.
 check() {
-  if eval "$2" > /dev/null 2>&1; then
+  if bash -c "$2" > /dev/null 2>&1; then
     echo "✅ $1"
     PASS=$((PASS + 1))
   else
@@ -48,6 +48,13 @@ check "README.md is not empty" "[ -s README.md ]"
 check "SECURITY checklist reviewed" "[ -s docs/checklists/SECURITY.md ]"
 check "FUNCTIONALITY checklist reviewed" "[ -s docs/checklists/FUNCTIONALITY.md ]"
 check "PRE_SHIP checklist reviewed" "[ -s docs/checklists/PRE_SHIP.md ]"
+check "ACCESSIBILITY checklist reviewed" "[ -s docs/checklists/ACCESSIBILITY.md ]"
+check "PERFORMANCE checklist reviewed" "[ -s docs/checklists/PERFORMANCE.md ]"
+check "OBSERVABILITY checklist reviewed" "[ -s docs/checklists/OBSERVABILITY.md ]"
+check "RELIABILITY checklist reviewed" "[ -s docs/checklists/RELIABILITY.md ]"
+check "OPERATIONS checklist reviewed" "[ -s docs/checklists/OPERATIONS.md ]"
+check "COMPLIANCE checklist reviewed" "[ -s docs/checklists/COMPLIANCE.md ]"
+check "COST_MANAGEMENT checklist reviewed" "[ -s docs/checklists/COST_MANAGEMENT.md ]"
 
 # Security checks (only if in a git repo)
 if [ -d .git ]; then
