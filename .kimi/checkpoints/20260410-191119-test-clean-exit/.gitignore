@@ -1,0 +1,41 @@
+# Environment
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Logs
+*.log
+logs/
+
+# OS / Editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets
+*.key
+*.pem
+secrets/
+
+# Data
+.data/
+*.sqlite
+*.db
+
+# Temporary
+tmp/
+temp/
+.cache/

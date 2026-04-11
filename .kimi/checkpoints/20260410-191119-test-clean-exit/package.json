@@ -1,0 +1,19 @@
+{
+  "name": "production-pipeline-template",
+  "version": "1.0.0",
+  "description": "A stack-agnostic, production-ready project scaffold for human + AI agent collaboration.",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.3"
+  }
+}
