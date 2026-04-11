@@ -33,6 +33,43 @@ This template provides:
 
 ---
 
+## Git Workflow: No Direct Push to `main`
+
+Because this repo does not use GitHub's branch protection rules (common on free private accounts), we enforce safety through **process and local git hooks** instead.
+
+### The Rule
+**Never push directly to `main`.** Always create a branch, open a Pull Request, wait for the green checkmark (CI tests passing), and only then merge.
+
+### Step-by-Step
+```bash
+# 1. Make sure you're on main and it's up to date
+git checkout main
+git pull origin main
+
+# 2. Create a new branch for your change
+git checkout -b your-branch-name
+
+# 3. Make changes, commit them
+git add .
+git commit -m "Describe your change"
+
+# 4. Push the branch (not main!)
+git push origin your-branch-name
+
+# 5. Go to GitHub and open a Pull Request
+# 6. Wait for "CI / Test & Build" to pass ✅
+# 7. Merge only after tests pass and code review is complete
+```
+
+### Local Safety Net
+`init-project.sh` installs a git pre-push hook that **blocks direct pushes to `main`**. If you accidentally try, you'll see:
+```
+❌ Direct push to main is not allowed.
+   Create a branch and open a Pull Request instead.
+```
+
+---
+
 ## Core Principles
 
 | Principle | Meaning |

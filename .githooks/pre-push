@@ -1,0 +1,20 @@
+#!/bin/bash
+# Pre-push hook: block direct pushes to main
+# This hook is installed by ./scripts/init-project.sh
+
+while read local_ref local_sha remote_ref remote_sha
+do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo ""
+    echo "❌ Direct push to main is not allowed."
+    echo "   Create a branch and open a Pull Request instead."
+    echo ""
+    echo "   Quick fix:"
+    echo "     git checkout -b your-branch-name"
+    echo "     git push origin your-branch-name"
+    echo ""
+    exit 1
+  fi
+done
+
+exit 0

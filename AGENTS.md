@@ -32,6 +32,7 @@ The human you are collaborating with has **one semester of Computer Applications
 5. **Audit First** — Run `./scripts/health-check.sh` before starting any work.
 6. **Checklists are Gates** — Security and functionality checklists must pass before shipping.
 7. **Never Assume** — Read `MEMORY.md`, `ERRORS.md`, and `STATE.md` before making decisions.
+8. **Branch Before Change** — Never push directly to `main`. Create a branch, open a PR, and merge only after CI passes and code review is complete.
 
 ---
 
