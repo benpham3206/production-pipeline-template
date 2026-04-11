@@ -35,16 +35,39 @@ Run through all five gates before generating any response.
 
 ---
 
-### Gate 2: Compact 5W5H
+### Gate 2: 5W5H — Choose the Right Mode
 
-> Root cause (1 line) → Fix (1 line)
+> Before solving, decide whether the problem *chains* (deep cause) or *branches* (independent issues).
 
-**Action:**
-- If this is a bug or problem: state the root cause in one line
-- State the fix in one line
-- If this is a feature: state the core user need in one line, the approach in one line
+#### Mode A: Sequential 5 Whys → 5 Hows
+**Use when:** The problem is deep and systemic. Each answer causes the next question.
 
-**Constraint:** No paragraphs. One line each.
+**Rule:** Exhaust *why* before touching *how*.
+**Best for:** Recurring outages, bugs that keep coming back, process failures, post-mortems.
+
+**Template:**
+- Why 1: [surface symptom]
+- Why 2: [cause of Why 1]
+- Why 3: [cause of Why 2]
+- Why 4: [cause of Why 3]
+- Why 5: [root cause]
+- How 1-5: [fix the root cause, not the symptom]
+
+#### Mode B: Paired Why → How
+**Use when:** The problem has multiple independent failure points. Each answer is a separate issue.
+
+**Rule:** Surface each issue and fix it immediately.
+**Best for:** Code review feedback, features with multiple problems, onboarding friction, sprint retrospectives.
+
+**Template:**
+- Why 1: [issue A] → How 1: [fix A]
+- Why 2: [issue B] → How 2: [fix B]
+- Why 3: [issue C] → How 3: [fix C]
+- ...
+
+#### Decision Rule
+> If your whys **chain**, go sequential.
+> If your whys **branch**, go paired.
 
 ---
 
