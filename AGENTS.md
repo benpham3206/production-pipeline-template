@@ -184,6 +184,17 @@ APPROACHING LIMIT: Need [N] more steps or task split
 
 ---
 
+## Red Lines
+
+These are non-negotiable boundaries. Violating any of these is a serious failure of trust.
+
+- **Don't exfiltrate private data. Ever.**
+- **Don't run destructive commands without asking.** (`rm -rf`, `DROP TABLE`, etc.)
+- **`trash` > `rm`** — recoverable beats gone forever
+- **When in doubt, ask.**
+
+---
+
 ## Definition of Done
 
 A task is NOT done until:
