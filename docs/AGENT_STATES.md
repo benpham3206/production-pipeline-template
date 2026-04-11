@@ -1,6 +1,6 @@
 # Agent States
 
-> Distinct operational states with specific behaviors, transitions, and safety rules.
+> Distinct operational modes with specific behaviors, transitions, and safety rules.
 
 ---
 
@@ -8,118 +8,68 @@
 
 | State | Purpose | Behavior |
 |-------|---------|----------|
-| **resting** | Idle time | Background tasks, memory pruning |
-| **coding** | Writing code | Validate syntax, test before commit |
-| **scripting** | Shell automation | Dry-run first, checkpoint before |
-| **testing** | Validation | Comprehensive tests, report results |
-| **reasoning** | Analysis | 5W5H, externalize thinking |
-| **executing** | Running commands | Monitor output, capture errors |
-| **recovering** | Post-crash | Restore state, resume interrupted |
+| **reasoning** | Analysis before action | Think, plan, define success criteria — no file changes |
+| **coding** | Build, test, run | Write code, scripts, tests, run commands, verify |
+| **discussing** | Informal conversation | Clarification, meta-work, no file changes |
+| **recovering** | Post-crash | Restore state, resume interrupted work |
 
 ---
 
-## State Behaviors (Detailed)
-
-### resting
-- Perform light background tasks
-- Prune outdated memory entries
-- Review `ERRORS.md` for stale patterns
-- Do NOT modify production code
-
-### coding
-- Create checkpoint before entering this state
-- Validate syntax before saving
-- Run unit tests before declaring success
-- Log all changes to `CONTEXT_LOG.md`
-- Update `STATE.md` progress after each logical unit
-
-### scripting
-- Create checkpoint before entering this state
-- Dry-run destructive commands first (`--dry-run`, `echo` preview)
-- Validate script syntax (`shellcheck`, `bash -n`)
-- Capture full output to `LOGS.md`
-- Never run interactive commands
-
-### testing
-- Run tests atomically: one assertion = one quantifiable outcome
-- Report pass/fail counts with exact numbers
-- On failure: capture expected vs actual, stack trace, environment state
-- Update `docs/TESTING.md` coverage map if tests are added/removed
-- Do NOT skip flaky tests — fix or document
+## State Behaviors
 
 ### reasoning
-- Externalize all thinking (`docs/AGENT_REASONING.md`)
-- Apply 5W5H to every problem
-- Use mental models from `docs/MENTAL_MODELS.md`
-- Do NOT write code while in reasoning state
-- Output structured analysis only
+- Run the 5 gates (`docs/AGENT_REASONING.md`)
+- Define or confirm success criteria in `STATE.md`
+- Select mental models from `docs/MENTAL_MODELS.md`
+- Do NOT write code or modify files while in this state
+- Output structured analysis and plan only
 
-### executing
-- Monitor all output in real time
-- Capture stdout, stderr, and exit codes
-- Abort on unexpected errors (do not proceed blindly)
-- Update `STATE.md` with execution status
-- Log completion or failure to `LOGS.md`
+### coding
+- Create checkpoint before significant changes
+- Validate syntax before saving
+- Run tests continuously; fix failures before proceeding
+- Log INTENT before acting, OUTCOME after
+- Update `STATE.md` progress after each logical unit
+- Capture stdout, stderr, and exit codes from commands
+
+### discussing
+- Use for casual clarification, brainstorming, or meta-conversation
+- Does NOT require a `CONTEXT_LOG.md` entry for every message
+- If a durable insight emerges (process improvement, decision, lesson learned), capture it in `MEMORY.md`
+- When project work resumes, transition back to `reasoning` or `coding` and log fresh INTENT
 
 ### recovering
-- Check `.recovery_needed` flag
+- Check `.recovery_needed` flag on startup
 - Load latest session backup from `.kimi/session_backup/`
 - Read `STATE.md` to identify interrupted tasks
 - Run `./scripts/recovery.sh` to validate state
-- Resume or report recovery status to user
 - Do NOT start new work until recovery is complete
 
 ---
 
 ## State Transitions
 
-### Mandatory Transitions
-
 | From | To | Requirement |
 |------|-----|-------------|
-| *any* | **coding** | Create checkpoint first |
-| *any* | **scripting** | Create checkpoint first |
-| **reasoning** | **coding** | Success criteria defined in `STATE.md` |
-| **testing** | **coding** | All tests pass OR failures documented |
-| **executing** | **coding** | Output captured and exit code validated |
+| *any* | **reasoning** | Before any material work |
+| *any* | **coding** | Create checkpoint first (for significant changes) |
+| **discussing** | **coding/reasoning** | User asks for formal project work |
 | *any* | **recovering** | `.recovery_needed` flag detected |
 
 ### Auto-Checkpoint Triggers
-
-- Entering **coding** → checkpoint
-- Entering **scripting** → checkpoint
+- Entering **coding** for significant changes → checkpoint
 - Long tasks (>60s of continuous execution) → auto-checkpoint
 - Before gateway restart → save session state
-
-### Recovery Trigger
-
-- After restart → check `.recovery_needed` flag
-- If set → transition to **recovering** immediately
-
----
-
-## State Logging
-
-Every state transition must be logged to `CONTEXT_LOG.md`:
-
-```markdown
-## Turn N: State Transition
-**From:** [old state]
-**To:** [new state]
-**Trigger:** [Why the transition occurred]
-**Checkpoint:** [checkpoint name or "none"]
-```
 
 ---
 
 ## Quick Reference
 
 ```
-Checkpoint before coding/scripting
+Reason before coding
+Checkpoint before significant changes
 Auto-checkpoint every 60s on long tasks
 Save session state before gateway restart
 Check .recovery_needed on startup
-Transition to recovering if flag is set
-Never write code while in reasoning state
-Always test before leaving testing state
+Discuss freely; log formally once work resumes
 ```

@@ -25,14 +25,93 @@ The human you are collaborating with has **one semester of Computer Applications
 
 ## Golden Rules
 
-1. **PRD Before Code** — No code is written until `PRD.md` is complete, reviewed, and approved.
-2. **Log is Truth** — `CONTEXT_LOG.md` is the source of truth. The PRD is a derived view.
-3. **Intent Before Action** — Log INTENT, then execute, then log OUTCOME (two-phase commit).
-4. **Reason Before Responding** — Run the 5 gates in `docs/AGENT_REASONING.md` before every response.
-5. **Audit First** — Run `./scripts/health-check.sh` before starting any work.
-6. **Checklists are Gates** — Security and functionality checklists must pass before shipping.
-7. **Never Assume** — Read `MEMORY.md`, `ERRORS.md`, and `STATE.md` before making decisions. Auto-detect lessons worth remembering.
-8. **Branch Before Change** — Never push directly to `main`. Create a branch, open a PR, and merge only after CI passes and code review is complete.
+0. **State Banner** — Begin **every** response with your current agent state: `**State: [reasoning|coding|discussing|recovering]**`. No exceptions.
+1. **Branch Before Change** — No work happens on `main`. Create a feature branch *before* writing any code. Never commit or push directly to `main`, and never run destructive git commands (`git reset --hard`, `git clean -fd`, force-pushes) without explicit human approval. Open a PR and merge only after CI passes and code review is complete.
+2. **PRD Before Code** — No code is written until `PRD.md` is complete, reviewed, and approved.
+3. **Log is Truth** — `CONTEXT_LOG.md` is the source of truth. The PRD is a derived view.
+4. **Intent Before Action** — Log INTENT, then execute, then log OUTCOME (two-phase commit).
+5. **Reason Before Responding** — Run the 5 gates in `docs/AGENT_REASONING.md` before every response.
+6. **Audit First** — Run `./scripts/health-check.sh` before starting any work.
+7. **Checklists are Gates** — Security and functionality checklists must pass before shipping.
+8. **Never Assume** — Read `MEMORY.md`, `ERRORS.md`, and `STATE.md` before making decisions.
+
+---
+
+## Anti-Laziness Rule
+
+You may not skip, abbreviate, or defer any step in this workflow because a task seems "small," "obvious," "just a quick fix," or "not worth the overhead." The only valid exceptions are those explicitly listed in this document (see Emergency Overrides below). When in doubt, you must run the full workflow — not a shortened version.
+
+---
+
+## Agent State Banner (MANDATORY)
+
+Every response — including greetings, clarifications, and meta-conversation — must begin with:
+
+```markdown
+**State: reasoning**
+```
+
+Valid states are defined in `docs/AGENT_STATES.md`:
+- `reasoning` — analyzing, planning, drafting docs, running **read-only / validation** commands
+- `coding` — writing code, tests, scripts, running commands that modify files or system state
+- `discussing` — informal Q&A, no files touched
+- `recovering` — restoring state after an interruption
+
+**Why:** This makes the agent's current mode explicit to the user and to future agents reading the transcript. It prevents mode confusion and premature coding.
+
+---
+
+## Transition to Coding (The Coding Lock)
+
+You may only enter `coding` state if **all** of the following gates are satisfied. If any gate is missing, stay in `reasoning` or `discussing` and tell the user exactly what's missing.
+
+| Gate | Evidence Required |
+|------|-------------------|
+| **PRD approved** | `PRD.md` contains `**Status:** Approved` or human explicitly said "PRD approved" |
+| **Technology selected** | `docs/TECHNOLOGY_SELECTION.md` exists and is marked approved. **N/A only if** the change uses the already-selected stack and introduces no new dependencies, services, or deployment targets |
+| **Design doc approved** | `docs/DESIGN_DOC.md` exists and human has approved it |
+| **Tests defined** | `docs/templates/test-spec.md` exists with test cases written |
+| **Plan exists** | `docs/INTERFACES.md` or `STATE.md` contains the execution plan for the current work |
+
+### Transition Ritual
+When moving to `coding`, you must explicitly state:
+
+```markdown
+Transitioning **reasoning → coding**. Gate check:
+- ✅ PRD approved
+- ✅ Technology selection approved (or N/A)
+- ✅ Design doc approved
+- ✅ Tests defined
+- ✅ Plan exists
+```
+
+If a gate is missing, say:
+
+```markdown
+Transition to coding **BLOCKED**:
+- ❌ [Gate name]: [what's missing]
+```
+
+---
+
+## Re-Approval Rule
+
+If you modify any of the following documents **after** they have been marked approved, you must immediately reset their status and request re-approval:
+
+- `PRD.md`
+- `docs/TECHNOLOGY_SELECTION.md`
+- `docs/DESIGN_DOC.md`
+- `docs/templates/test-spec.md`
+- `docs/INTERFACES.md`
+
+### Required Actions on Update
+1. **Change status** in the document to `**Status:** Pending Review`
+2. **Update `STATE.md`** — note that [Document] has been updated and is pending re-approval
+3. **Update `NEXT_ACTION.md`** — set the next action to "Human approval needed for updated [Document]"
+4. **Write to `memory/YYYY-MM-DD.md`** — one sentence summarizing what changed and why approval was reset
+5. **ADR requirement** — if the change affects architecture, scope, or constraints, add or update an entry in `docs/adr/`
+
+You may **not** return to `coding` state until the human explicitly re-approves the updated document.
 
 ---
 
@@ -42,24 +121,35 @@ Before starting ANY task, read in this exact order:
 
 1. `AGENTS.md` (this file)
 2. `docs/AGENT_REASONING.md` — your pre-response gates
-3. `NEXT_ACTION.md` — the one thing to do next (instant startup)
+3. `docs/AGENT_STATES.md` — state definitions and transition rules
 4. `STATE.md` — current task state
 5. `MEMORY.md`
 6. `ERRORS.md`
 7. `PRD.md`
 8. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
-9. `docs/PROCESS.md`
-10. `docs/INTERFACES.md` (if working on component boundaries)
-11. `docs/adr/README.md` (before making or changing architectural decisions)
-12. Relevant checklists in `docs/checklists/`
+9. `NEXT_ACTION.md` — instant session startup priority
+10. `docs/PROCESS.md`
+11. `docs/INTERFACES.md` (if working on component boundaries)
+12. `docs/adr/README.md` (before making or changing architectural decisions)
+13. Relevant checklists in `docs/checklists/`
 
 ---
 
 ## Execution Order (MANDATORY)
 
 ```
-REASON → INGEST → PRD → UI/UX → TESTS → DESIGN DOC → PLAN → INTENT → EXECUTE → OUTCOME → CODE REVIEW → DERIVE → VERIFY → DOCUMENT → CLOSEOUT
+REASON → INGEST → PRD → TECHNOLOGY_SELECTION → DESIGN_DOC → UI/UX_or_ARCHITECTURE → TESTS → PLAN → INTENT → EXECUTE → OUTCOME → CODE REVIEW → DERIVE → VERIFY → DOCUMENT → CLOSEOUT
 ```
+
+### State-to-Phase Mapping
+Use this to know which agent state applies to which phase:
+
+| Phase(s) | Agent State | Allowed Actions |
+|----------|-------------|-----------------|
+| REASON, INGEST, PRD, TECHNOLOGY_SELECTION, DESIGN_DOC, UI/UX_or_ARCHITECTURE, TESTS, PLAN | `reasoning` | Read files, analyze, draft documents, run **read-only / validation** commands (e.g., `health-check.sh`, `git status`, `cat`) |
+| INTENT, EXECUTE, OUTCOME, VERIFY | `coding` | Write/modify files, run tests, run build commands, run `checkpoint.sh`, push branches |
+| Casual Q&A, meta-work | `discussing` | No file changes, no commands |
+| Post-crash | `recovering` | Run `recovery.sh`, inspect state, resume or report |
 
 ### 0. REASON
 Run the 5 gates from `docs/AGENT_REASONING.md`:
@@ -82,33 +172,39 @@ State which model you're using and why in your INTENT log.
 
 ### 2. PRD
 - Draft or review `PRD.md`
-- Update PRD status to **Ready for Review**
-- **Stop and wait for human approval**
-- Only the human may mark the PRD **Approved**
-- Once approved, proceed to UI/UX
+- Get human approval before UI/UX
 
-### 3. UI/UX
-- Design flows, screens, copy using `docs/UI_UX.md`
-- Use `docs/templates/ui-spec.md`
-- Get human approval before test definition
+### 3. TECHNOLOGY SELECTION (new — Phase 4)
+- Propose a **technology stack** (languages, frameworks, databases, deployment model)
+- Propose an **architecture pattern** (monolith, microservices, serverless, edge)
+- Document in `docs/TECHNOLOGY_SELECTION.md`
+- Get **human approval** before proceeding
+- Only then select domain-specific templates from `docs/templates/`
+- **No design doc until technology selection is approved**
 
-### 4. TEST DEFINITION
-- Write test spec from UI/UX (`docs/templates/test-spec.md`)
-- Run edge case audit
-- **No code until tests are defined**
-
-### 5. DESIGN DOCUMENT
-- Write `docs/templates/design-doc.md`
+### 4. DESIGN DOCUMENT
+- Write using `docs/templates/design-doc.md`
 - Define objectives, metrics, constraints, criteria
 - Map every test to an objective
 - Run **adversarial test review** (`docs/ANTI_TEST_GAMING.md`)
 - **No code until design doc is approved**
 
-### 6. PLAN
+### 5. UI/UX or ARCHITECTURE
+- For user-facing products: Design flows, screens, copy
+- For backend/infra: Design system architecture, data flow
+- Use domain-specific templates from `docs/templates/`
+- Get human approval before test definition
+
+### 6. TEST DEFINITION
+- Write test spec from design (`docs/templates/test-spec.md`)
+- Run edge case audit
+- **No code until tests are defined**
+
+### 7. PLAN
 - Define interfaces in `docs/INTERFACES.md`
 - Create work packages if task is large or parallelizable
 
-### 7. INTENT
+### 8. INTENT
 Append to `CONTEXT_LOG.md` BEFORE acting:
 - Turn number
 - Target PRD section
@@ -116,7 +212,7 @@ Append to `CONTEXT_LOG.md` BEFORE acting:
 - Workspace snapshot (file hashes)
 - Risk flags
 
-### 8. EXECUTE
+### 9. EXECUTE
 - Enter the appropriate **agent state** (`docs/AGENT_STATES.md`)
 - Write code to make tests pass (TDD/BDD)
 - **Do not write code that merely passes tests** — code must satisfy the Design Doc constraints and spirit
@@ -124,7 +220,7 @@ Append to `CONTEXT_LOG.md` BEFORE acting:
 - Make changes
 - If executing long-running commands (>60s), auto-checkpoint mid-flight
 
-### 9. OUTCOME
+### 10. OUTCOME
 Append to `CONTEXT_LOG.md` AFTER executing:
 - Status (Success / Partial / Blocked)
 - Completed actions
@@ -132,25 +228,25 @@ Append to `CONTEXT_LOG.md` AFTER executing:
 - Workspace delta
 - PRD progress update
 
-### 10. CODE REVIEW
+### 11. CODE REVIEW
 - **Mandatory gate.** Code must be reviewed by a human or a *different* agent before proceeding.
 - Use `docs/templates/code-review.md` as the review checklist.
 - Reviewer confirms: tests make sense, no secrets, no debug code, design doc intent is met.
 - If reviewing alone, explicitly state who the reviewer is and that they are independent.
 
-### 11. DERIVE
+### 12. DERIVE
 - Update PRD status from the log (never manually edit PRD status)
 
-### 12. VERIFY
+### 13. VERIFY
 - Run `./scripts/health-check.sh`
 - Run tests
 - Check interface compliance
 
-### 13. DOCUMENT
-- Scan the session for `MEMORY.md` triggers (surprises, non-obvious fixes, user preferences, things that didn't work). If any hit, write a 1-3 sentence note.
+### 14. DOCUMENT
+- Update `MEMORY.md` with decisions and lessons
 - If you hit a bug, document it in `ERRORS.md`
 
-### 14. CLOSEOUT
+### 15. CLOSEOUT
 - Log completion to `LOGS.md`
 - Update `STATE.md` (mark task complete/blocked)
 - Write significant decisions to `memory/YYYY-MM-DD.md` or `MEMORY.md`
@@ -180,12 +276,13 @@ APPROACHING LIMIT: Need [N] more steps or task split
 
 ## Safety Rules
 
-- **No secrets in code** — ever
-- **Validate all inputs** — use Zod, Joi, or equivalent
-- **Handle all errors** — structured error handling, not `console.log`
+- **No secrets in code, in build artifacts, or in infrastructure state** — ever
+- **Validate all inputs** — use the appropriate validator for your stack (Zod, Pydantic, etc.)
+- **Handle all errors** — structured error handling, not `print`/`console.log`
 - **Test each function** — happy path, error path, edge case
 - **Update docs** — keep documentation in sync with code
 - **Stop the line** — if tests fail, fix before continuing
+- **Fail closed** — if a security control is down, deny service rather than bypassing
 
 ---
 
@@ -225,8 +322,21 @@ A task is NOT done until:
 - [ ] `CONTEXT_LOG.md` updated
 - [ ] `LOGS.md` updated
 - [ ] `STATE.md` updated
-- [ ] `NEXT_ACTION.md` updated
-- [ ] `MEMORY.md` updated (scan triggers; write a note if anything surprised you or the user)
+- [ ] `MEMORY.md` or `memory/YYYY-MM-DD.md` updated (if needed)
+
+---
+
+## Emergency Overrides
+
+You may skip the full workflow **only** in these situations:
+
+1. The human **explicitly** says: "skip the process, just fix it" or "emergency override"
+2. There's a critical production incident requiring immediate action
+3. It's documentation-only changes (README, comments) that do not affect behavior
+
+**You may NEVER declare your own task eligible for the fast path.** Only the human can grant an emergency override. Absent explicit human permission, the full workflow applies.
+
+Even on an emergency fast path, document the change in `CONTEXT_LOG.md` and `MEMORY.md`.
 
 ---
 
@@ -250,7 +360,7 @@ Ask the human immediately if:
 - Report blockers early
 - Never hide failures
 - Always cite the PRD section you're working on
-- **State your current agent state** when reporting progress (e.g., "State: coding")
+- **Lead every response with the state banner** (e.g., `**State: reasoning**`) — not just during progress reports, but on every single message
 - **Cite the mental model** you're applying when reasoning
 
 ---

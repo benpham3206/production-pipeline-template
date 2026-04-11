@@ -1,6 +1,9 @@
 # Product Requirements Document: [Feature/Project Name]
 
-**Status:** Draft → Ready for Review → Approved → Implemented
+**Status:** Draft
+
+> Valid statuses: Draft | Ready for Review | Approved | Implemented
+> **Workflow:** Agent drafts → sets to **Ready for Review** → human approves → sets to **Approved** → UI/UX phase begins. Only the human may mark a PRD **Approved**.
 
 > **Workflow:** Agent drafts → sets to **Ready for Review** → human approves → sets to **Approved** → UI/UX phase begins. Only the human may mark a PRD **Approved**.
 **Created:** YYYY-MM-DD
