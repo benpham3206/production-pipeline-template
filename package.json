@@ -7,7 +7,12 @@
     "test:coverage": "jest --coverage",
     "lint": "eslint src && tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "tsc",
+    "init": "./scripts/init-project.sh",
+    "health-check": "./scripts/health-check.sh",
+    "pre-ship-audit": "./scripts/pre-ship-audit.sh",
+    "checkpoint": "./scripts/checkpoint.sh",
+    "recover": "./scripts/recovery.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
