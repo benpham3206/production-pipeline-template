@@ -77,8 +77,7 @@ if [ -f "package.json" ]; then
   if grep -q '"test"' package.json; then
     echo ""
     echo "Running test suite..."
-    # Run tests and capture exit code directly — do NOT pipe to grep,
-    # because piping masks the real exit code and can false-positive.
+    # Run tests directly to preserve exit code.
     if npm test; then
       echo "✅ Tests passing"
       PASS=$((PASS + 1))
