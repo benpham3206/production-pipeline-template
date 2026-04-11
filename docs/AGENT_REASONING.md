@@ -228,6 +228,10 @@ If the task involved a significant decision:
 - Write to `memory/YYYY-MM-DD.md`
 - Or append to `MEMORY.md`
 
+### Step 4: Update NEXT_ACTION.md
+
+Write the one specific next task and why it matters. This lets the next agent (or human) drop in and start immediately without reconstructing priority from `STATE.md`.
+
 **memory/YYYY-MM-DD.md Template:**
 ```markdown
 # Decisions — [YYYY-MM-DD]
@@ -252,5 +256,5 @@ COMPLEX -> Score 0-10, delegate if ≥4 or parallel
 SALVATIER -> List hidden subtasks, decompose if "easy"
 STATE  -> Create STATE.md entry, define success criteria
 EXEC   -> Checkpoint first if significant
-CLOSE  -> LOGS.md + STATE.md + memory/YYYY-MM-DD.md
+CLOSE  -> LOGS.md + STATE.md + memory/YYYY-MM-DD.md + NEXT_ACTION.md
 ```

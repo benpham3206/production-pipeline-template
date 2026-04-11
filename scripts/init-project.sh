@@ -17,6 +17,7 @@ echo ""
 REQUIRED_FILES=(
   "AGENTS.md"
   "PRD.md"
+  "NEXT_ACTION.md"
   "CONTEXT_LOG.md"
   "STATE.md"
   "LOGS.md"
