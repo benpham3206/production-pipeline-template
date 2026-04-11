@@ -1,48 +1,88 @@
+# ============================================================================
+# Production Pipeline — .gitignore
+# Language-agnostic patterns for any technology stack
+# ============================================================================
+
 # Environment
 .env
 .env.local
 .env.*.local
 .env.production
 
-# Dependencies
+# ---- JavaScript / TypeScript ----
 node_modules/
-vendor/
-
-# Build outputs
 dist/
 build/
 coverage/
 *.tsbuildinfo
+.next/
+.nuxt/
+.cache/
 
-# Logs
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Go ----
+vendor/
+
+# ---- Rust ----
+target/
+
+# ---- Java / Kotlin ----
+*.jar
+*.class
+*.war
+.gradle/
+
+# ---- Flutter / Dart ----
+.dart_tool/
+.packages
+
+# ---- General build outputs ----
 *.log
 logs/
 
-# OS / Editor
+# ---- OS / Editor ----
 .DS_Store
 .vscode/
 .idea/
 *.swp
 *.swo
+Thumbs.db
 
-# Secrets
+# ---- Secrets (never commit) ----
 *.key
 *.pem
 secrets/
 
-# Data
+# ---- Data ----
 .data/
 *.sqlite
 *.db
 
-# Temporary
+# ---- Temporary ----
 tmp/
 temp/
 .cache/
 
-# Agent local state
+# ---- Agent local state ----
 .kimi/
 
-# Project workspaces built from this template
+# ---- Playwright MCP temp files ----
+.playwright-mcp/
+
+# ---- Project workspaces built from this template ----
 enterprise-pipeline/
-enterprise-pipeline/
+
+# ---- Security assessments (local only) ----
+redteam/
+redteam2/
+redteam3/
