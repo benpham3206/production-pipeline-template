@@ -37,7 +37,6 @@ if [ "$COMMAND" = "create" ]; then
 
   # Copy tracked files (excluding build artifacts and git internals)
   if [ -d .git ]; then
-    # Pipefail ensures if git ls-files fails, the whole script exits.
     git ls-files | while read -r file; do
       if [ -f "$file" ]; then
         mkdir -p "$TARGET/$(dirname "$file")"
@@ -45,7 +44,7 @@ if [ "$COMMAND" = "create" ]; then
       fi
     done
   else
-    # Fallback: copy key files manually (macOS-compatible)
+    # Fallback for non-git directories (macOS-compatible)
     find . \
       -not -path './.git/*' \
       -not -path './node_modules/*' \
@@ -94,8 +93,7 @@ elif [ "$COMMAND" = "restore" ]; then
   fi
 
   echo "Restoring from checkpoint: $NAME"
-  # Copy all files from the checkpoint back to the project root.
-  # The trailing slash on TARGET ensures cp copies contents, not the directory itself.
+  # Restore checkpoint contents to project root.
   cp -r "$TARGET/"* .
   echo "✅ Restored from $NAME"
   exit 0
