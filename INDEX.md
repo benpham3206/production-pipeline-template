@@ -60,6 +60,8 @@
 
 ## memory/
 
+> **Memory system:** `memory/YYYY-MM-DD.md` = detailed daily decision log (the "why" behind big choices). `MEMORY.md` = distilled lessons and quick reminders from those logs.
+
 | File | Purpose |
 |------|---------|
 | `memory/YYYY-MM-DD.md` | Dated decision records (append-only) |
