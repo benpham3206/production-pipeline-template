@@ -146,17 +146,19 @@ git push origin your-branch-name
 See [`docs/PROCESS.md`](docs/PROCESS.md) for the full workflow. At a high level:
 
 ```
-1. Think      → Write/approve the PRD
-2. Design     → UI/UX specs with exact copy and all states
-3. Define     → Tests derived from UI/UX specs
-4. Document   → Design Doc with constraints, criteria, and adversarial review
-5. Plan       → Define interfaces, create work packages
-6. Log         → Record INTENT before every execution step
-7. Execute     → Write code to make tests pass
-8. Code Review → Review by human or independent agent before verification
-9. Verify      → Run tests, constraint audit, anti-gaming review, health checks
-10. Ship       → Pre-ship audit passes → Deploy
-11. Document   → Update MEMORY.md, ERRORS.md, CONTEXT_LOG.md, LOGS.md
+1. Think       → Agent drafts PRD, sets to "Ready for Review"
+2. Approve     → Human approves PRD → "Approved"
+3. Design      → UI/UX specs with exact copy and all states
+4. Approve     → Human approves UI/UX
+5. Define      → Tests derived from UI/UX specs
+6. Document    → Design Doc with constraints, criteria, and adversarial review
+7. Plan        → Define interfaces, create work packages
+8. Log         → Record INTENT before every execution step
+9. Execute     → Write code to make tests pass
+10. Code Review → Review by human or independent agent before verification
+11. Verify     → Run tests, constraint audit, anti-gaming review, health checks
+12. Ship        → Pre-ship audit passes → Deploy
+13. Document    → Update MEMORY.md, ERRORS.md, CONTEXT_LOG.md, LOGS.md
 ```
 
 **Key gates:**
