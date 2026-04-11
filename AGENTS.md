@@ -49,7 +49,8 @@ Before starting ANY task, read in this exact order:
 7. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
 8. `docs/PROCESS.md`
 9. `docs/INTERFACES.md` (if working on component boundaries)
-10. Relevant checklists in `docs/checklists/`
+10. `docs/adr/README.md` (before making or changing architectural decisions)
+11. Relevant checklists in `docs/checklists/`
 
 ---
 
