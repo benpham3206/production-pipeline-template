@@ -31,7 +31,7 @@ The human you are collaborating with has **one semester of Computer Applications
 4. **Reason Before Responding** — Run the 5 gates in `docs/AGENT_REASONING.md` before every response.
 5. **Audit First** — Run `./scripts/health-check.sh` before starting any work.
 6. **Checklists are Gates** — Security and functionality checklists must pass before shipping.
-7. **Never Assume** — Read `MEMORY.md`, `ERRORS.md`, and `STATE.md` before making decisions.
+7. **Never Assume** — Read `MEMORY.md`, `ERRORS.md`, and `STATE.md` before making decisions. Auto-detect lessons worth remembering.
 8. **Branch Before Change** — Never push directly to `main`. Create a branch, open a PR, and merge only after CI passes and code review is complete.
 
 ---
@@ -144,7 +144,7 @@ Append to `CONTEXT_LOG.md` AFTER executing:
 - Check interface compliance
 
 ### 13. DOCUMENT
-- Update `MEMORY.md` with decisions and lessons
+- Scan the session for `MEMORY.md` triggers (surprises, non-obvious fixes, user preferences, things that didn't work). If any hit, write a 1-3 sentence note.
 - If you hit a bug, document it in `ERRORS.md`
 
 ### 14. CLOSEOUT
@@ -223,7 +223,7 @@ A task is NOT done until:
 - [ ] `LOGS.md` updated
 - [ ] `STATE.md` updated
 - [ ] `NEXT_ACTION.md` updated
-- [ ] `MEMORY.md` or `memory/YYYY-MM-DD.md` updated (if needed)
+- [ ] `MEMORY.md` updated (scan triggers; write a note if anything surprised you or the user)
 
 ---
 
