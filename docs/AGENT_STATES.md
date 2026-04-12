@@ -30,7 +30,20 @@
 - Run tests continuously; fix failures before proceeding
 - Log INTENT before acting, OUTCOME after
 - Update `STATE.md` progress after each logical unit
-- Capture stdout, stderr, and exit codes from commands
+
+**Scripting sub-rules:**
+- Dry-run destructive commands first (`--dry-run`, `echo` preview)
+- Validate with `shellcheck` or `bash -n` before saving
+- Never run interactive commands in automation
+
+**Testing sub-rules:**
+- Report exact pass/fail counts with numbers
+- On failure: capture expected vs actual, stack trace, and environment state
+- Do NOT skip flaky tests — fix or document
+
+**Execution sub-rules:**
+- Capture stdout, stderr, and exit codes
+- Abort on unexpected errors; do not proceed blindly
 
 ### discussing
 - Use for casual clarification, brainstorming, or meta-conversation
