@@ -165,25 +165,33 @@ git push origin your-branch-name
 
 ## The Workflow (Human + Agent)
 
-See [`docs/PROCESS.md`](docs/PROCESS.md) for the full workflow. At a high level:
+See [`docs/PROCESS.md`](docs/PROCESS.md) for the full workflow. At a high level, the pipeline has **4 phases**:
 
 ```
-0. Think         → Agent drafts PRD, sets to "Ready for Review"
-1. Approve       → Human approves PRD → "Approved"
-2. Select Stack  → Document technology selection, get human approval
-3. Design Doc    → Constraints, criteria, adversarial review
-4. Approve       → Human approves design doc
-5. UI/UX or Arch → Design flows, screens, copy, or system architecture
-6. Approve       → Human approves UI/UX or architecture
-7. Define Tests  → Tests derived from design specs
-8. Plan          → Define interfaces, create work packages
-9. Log           → Record INTENT before every execution step
-10. Execute      → Write code to make tests pass
-11. Code Review  → Review by human or independent agent before verification
-12. Derive       → Update PRD status from the log
-13. Verify       → Run tests, constraint audit, anti-gaming review, health checks
-14. Ship         → Pre-ship audit passes → Deploy
-15. Closeout     → Update MEMORY.md, ERRORS.md, CONTEXT_LOG.md, LOGS.md
+PHASE 1: DISCOVER
+  0. REASON  → Run 5 gates, create STATE.md entry
+  1. INGEST  → Read docs, hash files, run health-check.sh
+  2. PRD     → Draft PRD.md; human approval required
+  3. TECH    → Document technology selection; human approval required
+  4. DESIGN  → Write design doc; human approval required
+  5. UI/ARCH → Design flows, screens, or system architecture
+
+PHASE 2: DEFINE
+  6. TESTS   → Define tests from design specs
+  7. PLAN    → Define interfaces, create work packages
+  8. DESIGN_TESTS → Adversarial test review (optional but recommended)
+
+PHASE 3: BUILD
+  9. INTENT  → Log planned actions before executing
+  10. EXECUTE → Write code to make tests pass
+  11. OUTCOME → Log results after executing
+  12. REVIEW → Mandatory code review before verification
+  13. DERIVE → Update PRD status from the log
+  14. VERIFY → Run tests, checklists, constraint audit
+
+PHASE 4: SHIP
+  15. DOCUMENT → Update MEMORY.md, ERRORS.md
+  16. CLOSEOUT → Log completion, update STATE.md
 ```
 
 **Key gates:**

@@ -15,86 +15,70 @@ This project treats the AI agent as a **collaborator**, not a tool. That means:
 
 ---
 
-## Workflow Overview
+## Workflow Overview (4 Phases)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    PRODUCTION PIPELINE WORKFLOW                         │
+│                    PRODUCTION PIPELINE (4 PHASES)                       │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
-│   ┌─────────────┐                                                       │
-│   │  0. REASON  │  → Run 5 gates (docs/AGENT_REASONING.md)              │
-│   │             │  → Create STATE.md entry                               │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  1. INGEST  │  → Read mandatory docs, hash files, understand state   │
-│   │             │  → Run health-check.sh                                 │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  2. PRD     │  → Human + Agent draft PRD.md                          │
-│   │             │  → Human approves before any design                    │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌──────────────────────┐                                              │
-│   │  3. TECHNOLOGY_SEL.  │  → Propose stack and architecture pattern      │
-│   │                      │  → Document in docs/TECHNOLOGY_SELECTION.md    │
-│   │                      │  → Human approves before design doc            │
-│   └──────┬───────────────┘                                              │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  4. DESIGN  │  → Write design doc (docs/DESIGN_DOC.md)              │
-│   │             │  → Constraints, criteria, adversarial review           │
-│   │             │  → Human approves before UI/UX or architecture         │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  5. UI/UX   │  → Design flows, states, copy (docs/UI_UX.md)          │
-│   │  or ARCH    │  → Human approves before test definition               │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  6. TESTS   │  → Define tests from design specs                      │
-│   │             │  → Edge case audit                                     │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │  7. PLAN    │  → Define interfaces (docs/INTERFACES.md)              │
-│   │             │  → Create work packages                                │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐     ┌─────────────┐     ┌─────────────┐               │
-│   │  8. INTENT  │────▶│  9. EXECUTE │────▶│ 10. OUTCOME │               │
-│   │   (Log)     │     │   (Work)    │     │   (Log)     │               │
-│   └─────────────┘     └─────────────┘     └──────┬──────┘               │
-│          ▲────────────────────────────────────────┘                     │
-│          │ (Repeat 8-10 for every turn)                                  │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │ 11. REVIEW  │  → Code review before verification                     │
-│   │             │  → Human or peer agent approval required                │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │ 12. DERIVE  │  → Update PRD status from the log                      │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │ 13. VERIFY  │  → Run tests, checklists, constraint audit             │
-│   │             │  → Anti-test-gaming review                             │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │ 14. SHIP    │  → Pre-ship audit passes → Deploy                      │
-│   └──────┬──────┘                                                       │
-│          ▼                                                              │
-│   ┌─────────────┐                                                       │
-│   │ 15. CLOSEOUT│  → Update LOGS.md, STATE.md, MEMORY.md                │
-│   └─────────────┘                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  PHASE 1: DISCOVER                                              │    │
+│  │  REASON → INGEST → PRD → TECH_SEL → DESIGN_DOC → UI/UX_or_ARCH│    │
+│  │  • Understand the problem                                       │    │
+│  │  • Get human approval on PRD, tech stack, design doc, UX/arch   │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                              ▼                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  PHASE 2: DEFINE                                                │    │
+│  │  TESTS → PLAN → [DESIGN_TESTS]                                  │    │
+│  │  • Define tests from design specs                               │    │
+│  │  • Plan interfaces and work packages                            │    │
+│  │  • Run adversarial test review                                  │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                              ▼                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  PHASE 3: BUILD                                                 │    │
+│  │  INTENT → EXECUTE → OUTCOME → CODE_REVIEW → DERIVE → VERIFY     │    │
+│  │  • Write code (TDD/BDD)                                         │    │
+│  │  • Log intent and outcome every turn                            │    │
+│  │  • Code review gate before verification                         │    │
+│  │  • Run tests, checklists, constraint audit                      │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                              ▼                                          │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  PHASE 4: SHIP                                                  │    │
+│  │  DOCUMENT → CLOSEOUT                                            │    │
+│  │  • Pre-ship audit, deploy                                       │    │
+│  │  • Update MEMORY.md, STATE.md, LOGS.md                          │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Detailed 16-Step View
+
+For fine-grained tracking, the 4 phases break down into 16 steps:
+
+| Step | Name | Phase | Purpose |
+|------|------|-------|---------|
+| 0 | REASON | DISCOVER | Run 5 gates, create STATE.md entry |
+| 1 | INGEST | DISCOVER | Read docs, hash files, run health-check.sh |
+| 2 | PRD | DISCOVER | Draft PRD.md; human approval required |
+| 3 | TECHNOLOGY_SELECTION | DISCOVER | Propose stack; human approval required |
+| 4 | DESIGN_DOC | DISCOVER | Write design doc; human approval required |
+| 5 | UI/UX_or_ARCHITECTURE | DISCOVER | Design flows or system architecture |
+| 6 | TESTS | DEFINE | Define tests from design specs |
+| 7 | PLAN | DEFINE | Define interfaces, create work packages |
+| 8 | DESIGN_TESTS | DEFINE | Adversarial test review (optional but recommended) |
+| 9 | INTENT | BUILD | Log planned actions before executing |
+| 10 | EXECUTE | BUILD | Write code, run tests |
+| 11 | OUTCOME | BUILD | Log results after executing |
+| 12 | CODE_REVIEW | BUILD | Mandatory review before verification |
+| 13 | DERIVE | BUILD | Update PRD status from the log |
+| 14 | VERIFY | BUILD | Run tests, checklists, constraint audit |
+| 15 | DOCUMENT | SHIP | Update MEMORY.md, ERRORS.md |
+| 16 | CLOSEOUT | SHIP | Log completion, update STATE.md |
 
 ---
 
@@ -108,8 +92,8 @@ Every agent response must begin with a state banner:
 
 Valid states: `reasoning`, `coding`, `discussing`, `recovering`.
 
-- **`reasoning`** — Phases 0-7 and 12: read, analyze, draft documents, run read-only commands
-- **`coding`** — Phases 8-10 and 13-14: write files, run tests, execute builds, deploy
+- **`reasoning`** — DISCOVER and DEFINE phases: read, analyze, draft documents, run read-only commands
+- **`coding`** — BUILD and SHIP phases: write files, run tests, execute builds, deploy
 - **`discussing`** — Casual Q&A, no file changes
 - **`recovering`** — Post-crash state restoration
 
