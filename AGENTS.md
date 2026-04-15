@@ -137,19 +137,33 @@ Before starting ANY task, read in this exact order:
 
 ## Execution Order (MANDATORY)
 
+The workflow is organized into **4 main phases**. Each phase contains specific steps (shown in parentheses).
+
 ```
-REASON → INGEST → PRD → TECHNOLOGY_SELECTION → DESIGN_DOC → UI/UX_or_ARCHITECTURE → TESTS → PLAN → INTENT → EXECUTE → OUTCOME → CODE REVIEW → DERIVE → VERIFY → DOCUMENT → CLOSEOUT
+PHASE 1: DISCOVER
+  (REASON → INGEST → PRD → TECHNOLOGY_SELECTION → DESIGN_DOC → UI/UX_or_ARCHITECTURE)
+
+PHASE 2: DEFINE
+  (TESTS → PLAN → [DESIGN_TESTS])
+
+PHASE 3: BUILD
+  (INTENT → EXECUTE → OUTCOME → CODE REVIEW → DERIVE → VERIFY)
+
+PHASE 4: SHIP
+  (DOCUMENT → CLOSEOUT)
 ```
 
 ### State-to-Phase Mapping
 Use this to know which agent state applies to which phase:
 
-| Phase(s) | Agent State | Allowed Actions |
-|----------|-------------|-----------------|
-| REASON, INGEST, PRD, TECHNOLOGY_SELECTION, DESIGN_DOC, UI/UX_or_ARCHITECTURE, TESTS, PLAN | `reasoning` | Read files, analyze, draft documents, run **read-only / validation** commands (e.g., `health-check.sh`, `git status`, `cat`) |
-| INTENT, EXECUTE, OUTCOME, VERIFY | `coding` | Write/modify files, run tests, run build commands, run `checkpoint.sh`, push branches |
+| Phase | Agent State | Allowed Actions |
+|-------|-------------|-----------------|
+| **DISCOVER** and **DEFINE** | `reasoning` | Read files, analyze, draft documents, run **read-only / validation** commands (e.g., `health-check.sh`, `git status`, `cat`) |
+| **BUILD** and **SHIP** | `coding` | Write/modify files, run tests, run build commands, run `checkpoint.sh`, push branches |
 | Casual Q&A, meta-work | `discussing` | No file changes, no commands |
 | Post-crash | `recovering` | Run `recovery.sh`, inspect state, resume or report |
+
+## Phase 1: DISCOVER (Agent State: `reasoning`)
 
 ### 0. REASON
 Run the 5 gates from `docs/AGENT_REASONING.md`:
@@ -174,7 +188,7 @@ State which model you're using and why in your INTENT log.
 - Draft or review `PRD.md`
 - Get human approval before UI/UX
 
-### 3. TECHNOLOGY SELECTION (new — Phase 4)
+### 3. TECHNOLOGY SELECTION
 - Propose a **technology stack** (languages, frameworks, databases, deployment model)
 - Propose an **architecture pattern** (monolith, microservices, serverless, edge)
 - Document in `docs/TECHNOLOGY_SELECTION.md`
@@ -195,6 +209,10 @@ State which model you're using and why in your INTENT log.
 - Use domain-specific templates from `docs/templates/`
 - Get human approval before test definition
 
+---
+
+## Phase 2: DEFINE (Agent State: `reasoning`)
+
 ### 6. TEST DEFINITION
 - Write test spec from design (`docs/templates/test-spec.md`)
 - Run edge case audit
@@ -204,7 +222,15 @@ State which model you're using and why in your INTENT log.
 - Define interfaces in `docs/INTERFACES.md`
 - Create work packages if task is large or parallelizable
 
-### 8. INTENT
+### 8. DESIGN_TESTS (optional but recommended)
+- Review each design constraint and write a test that would catch its most likely failure
+- Document in `docs/templates/test-spec.md`
+
+---
+
+## Phase 3: BUILD (Agent State: `coding`)
+
+### 9. INTENT
 Append to `CONTEXT_LOG.md` BEFORE acting:
 - Turn number
 - Target PRD section
@@ -212,7 +238,7 @@ Append to `CONTEXT_LOG.md` BEFORE acting:
 - Workspace snapshot (file hashes)
 - Risk flags
 
-### 9. EXECUTE
+### 10. EXECUTE
 - Enter the appropriate **agent state** (`docs/AGENT_STATES.md`)
 - Write code to make tests pass (TDD/BDD)
 - **Do not write code that merely passes tests** — code must satisfy the Design Doc constraints and spirit
@@ -220,7 +246,7 @@ Append to `CONTEXT_LOG.md` BEFORE acting:
 - Make changes
 - If executing long-running commands (>60s), auto-checkpoint mid-flight
 
-### 10. OUTCOME
+### 11. OUTCOME
 Append to `CONTEXT_LOG.md` AFTER executing:
 - Status (Success / Partial / Blocked)
 - Completed actions
@@ -228,25 +254,29 @@ Append to `CONTEXT_LOG.md` AFTER executing:
 - Workspace delta
 - PRD progress update
 
-### 11. CODE REVIEW
+### 12. CODE REVIEW
 - **Mandatory gate.** Code must be reviewed by a human or a *different* agent before proceeding.
 - Use `docs/templates/code-review.md` as the review checklist.
 - Reviewer confirms: tests make sense, no secrets, no debug code, design doc intent is met.
 - If reviewing alone, explicitly state who the reviewer is and that they are independent.
 
-### 12. DERIVE
+### 13. DERIVE
 - Update PRD status from the log (never manually edit PRD status)
 
-### 13. VERIFY
+### 14. VERIFY
 - Run `./scripts/health-check.sh`
 - Run tests
 - Check interface compliance
 
-### 14. DOCUMENT
+---
+
+## Phase 4: SHIP (Agent State: `coding`)
+
+### 15. DOCUMENT
 - Update `MEMORY.md` with decisions and lessons
 - If you hit a bug, document it in `ERRORS.md`
 
-### 15. CLOSEOUT
+### 16. CLOSEOUT
 - Log completion to `LOGS.md`
 - Update `STATE.md` (mark task complete/blocked)
 - Write significant decisions to `memory/YYYY-MM-DD.md` or `MEMORY.md`
