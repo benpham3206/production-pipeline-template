@@ -179,7 +179,7 @@ PHASE 1: DISCOVER
 PHASE 2: DEFINE
   6. TESTS   → Define tests from design specs
   7. PLAN    → Define interfaces, create work packages
-  8. DESIGN_TESTS → Adversarial test review (optional but recommended)
+  8. DESIGN_TESTS → Bug Hypothesis Matrix + adversarial test review
 
 PHASE 3: BUILD
   9. INTENT  → Log planned actions before executing
@@ -200,6 +200,7 @@ PHASE 4: SHIP
 - No UI/UX or architecture until design doc is approved
 - No test definition until UI/UX/architecture is approved
 - No code until tests are defined and design doc is approved
+- No code until the Bug Hypothesis Matrix is complete
 - No verification until code review is approved
 
 ---
@@ -263,6 +264,7 @@ Before any code ships, verify the relevant checklists:
 - Read `AGENTS.md` first. It contains your operating rules.
 - Begin **every** response with the state banner.
 - Run the 5 gates in `docs/AGENT_REASONING.md` before every response.
+- When debugging a failure, follow `docs/DEBUGGING.md` — default to `reasoning` state, reproduce first, change one variable at a time.
 - Never write code before the Coding Lock gates are satisfied.
 - Log INTENT → Execute → Log OUTCOME in `CONTEXT_LOG.md` for every turn.
 - After coding, run the constraint audit in `docs/ANTI_TEST_GAMING.md`.

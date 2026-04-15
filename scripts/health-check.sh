@@ -51,6 +51,7 @@ check "docs/MENTAL_MODELS.md exists" "[ -f docs/MENTAL_MODELS.md ]"
 check "docs/DESIGN_DOC.md exists" "[ -f docs/DESIGN_DOC.md ]"
 check "docs/ANTI_TEST_GAMING.md exists" "[ -f docs/ANTI_TEST_GAMING.md ]"
 check "docs/TESTING.md exists" "[ -f docs/TESTING.md ]"
+check "docs/DEBUGGING.md exists" "[ -f docs/DEBUGGING.md ]"
 check "INDEX.md exists" "[ -f INDEX.md ]"
 
 # .kimi checks
