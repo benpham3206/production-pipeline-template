@@ -122,16 +122,17 @@ Before starting ANY task, read in this exact order:
 1. `AGENTS.md` (this file)
 2. `docs/AGENT_REASONING.md` — your pre-response gates
 3. `docs/AGENT_STATES.md` — state definitions and transition rules
-4. `STATE.md` — current task state
-5. `MEMORY.md`
-6. `ERRORS.md`
-7. `PRD.md`
-8. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
-9. `NEXT_ACTION.md` — instant session startup priority
-10. `docs/PROCESS.md`
-11. `docs/INTERFACES.md` (if working on component boundaries)
-12. `docs/adr/README.md` (before making or changing architectural decisions)
-13. Relevant checklists in `docs/checklists/`
+4. `docs/DEBUGGING.md` — when investigating any failure
+5. `STATE.md` — current task state
+6. `MEMORY.md`
+7. `ERRORS.md`
+8. `PRD.md`
+9. `CONTEXT_LOG.md` (find the tail pointer in `.kimi/context_log.tail`)
+10. `NEXT_ACTION.md` — instant session startup priority
+11. `docs/PROCESS.md`
+12. `docs/INTERFACES.md` (if working on component boundaries)
+13. `docs/adr/README.md` (before making or changing architectural decisions)
+14. Relevant checklists in `docs/checklists/`
 
 ---
 
@@ -167,6 +168,7 @@ Use this to know which agent state applies to which phase:
 
 ### 0. REASON
 Run the 5 gates from `docs/AGENT_REASONING.md`:
+- If the request involves a failure, bug, or unexpected error, **also run `docs/DEBUGGING.md`**
 - **Intent Check** — Do I understand the request?
 - **Compact 5W5H** — Root cause → Fix (1 line each)
 - **Complexity Check** — Score 0-10. Delegate if ≥4 or parallelizable
@@ -215,16 +217,20 @@ State which model you're using and why in your INTENT log.
 
 ### 6. TEST DEFINITION
 - Write test spec from design (`docs/templates/test-spec.md`)
+- **Fill out the Bug Hypothesis Matrix** — for each Design Doc constraint, hypothesize the simplest bug that would violate it, then write a test that catches it
 - Run edge case audit
-- **No code until tests are defined**
+- **No code until tests are defined. Tests written after code are invalid.**
 
 ### 7. PLAN
 - Define interfaces in `docs/INTERFACES.md`
 - Create work packages if task is large or parallelizable
 
-### 8. DESIGN_TESTS (optional but recommended)
-- Review each design constraint and write a test that would catch its most likely failure
-- Document in `docs/templates/test-spec.md`
+### 8. DESIGN_TESTS
+- Use the drafted test spec and defined interfaces to fill out the **Bug Hypothesis Matrix**
+- For each Design Doc constraint, ask: *"What is the simplest bug that would violate this constraint now that interfaces are known?"*
+- Run **adversarial test review** (`docs/ANTI_TEST_GAMING.md`)
+- Finalize edge case audit
+- **No code until the Bug Hypothesis Matrix is complete**
 
 ---
 

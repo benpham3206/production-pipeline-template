@@ -52,6 +52,31 @@ Every test must be:
 
 ---
 
+## Bug Hypothesis Matrix
+
+> **Use the Design Doc constraints to hypothesize bugs, then write tests that would catch them.**
+
+This section bridges the Design Doc constraints to the test suite. For each constraint, ask: *"What is the simplest, most plausible bug that would violate this constraint?"* Then write a test that would catch that bug.
+
+### Constraints from Design Doc
+
+| Constraint ID | Constraint Text | Likely Bug | Test That Catches It |
+|---------------|-----------------|------------|----------------------|
+| C1 | [e.g., "No DB queries from frontend"] | ORM imported in React component | T8: assert no `pg` or `prisma` imports in `src/components/` |
+| C2 | [e.g., "All secrets remain server-side"] | API key hardcoded in client bundle | T9: build output grep for secret patterns returns zero matches |
+| C3 | [e.g., "Max 100 items per request"] | Missing pagination limit in handler | T10: request with `limit=101` returns 400 Bad Request |
+
+### Why This Is Mandatory
+
+Writing tests *after* code is a trap. The agent (or human) will unconsciously derive tests from the implementation, not the requirements. This produces:
+- **Implementation-dependent tests** that break during valid refactors
+- **Missing tests** for bugs that "feel unlikely" because the code already "looks right"
+- **False confidence** — green tests that only prove the code does what the code does
+
+The Bug Hypothesis Matrix forces adversarial thinking **before** implementation bias sets in.
+
+---
+
 ## Edge Case Audit
 
 Before implementation, verify these are tested:

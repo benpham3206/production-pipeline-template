@@ -32,15 +32,26 @@ Before writing code, the Design Document defines constraints that tests cannot e
 
 ---
 
-## Safeguard 2: Adversarial Test Review
+## Safeguard 2: Adversarial Test Review (Bug Hypothesis Matrix)
 
 **Before writing code, the agent must try to break the tests.**
 
-Mandatory questions:
+This is formalized in the `docs/templates/test-spec.md` as the **Bug Hypothesis Matrix**. For every constraint in the Design Document, the agent must:
+
+1. Identify the simplest, most plausible bug that would violate the constraint
+2. Write a test that would catch that bug
+3. Only then proceed to implementation
+
+### Mandatory Questions
 1. How could an implementation pass these tests while still being wrong?
 2. What edge cases are the tests missing?
 3. Are any tests implementation-dependent (testing "how" instead of "what")?
 4. Could a hardcoded lookup table or mocked behavior pass the tests?
+5. **If I wrote the code first, which of these tests would I have forgotten to write?**
+
+### Why Tests Must Be Written Before Code
+
+Writing tests after code is the primary cause of test gaming. Once the implementation exists, the agent's brain anchors to it. Tests become descriptions of the code rather than specifications of correct behavior. The Bug Hypothesis Matrix exists to force adversarial thinking **while the implementation is still a blank page**.
 
 **Action:** If loopholes are found, fix the tests or add constraints **before** any code is written.
 

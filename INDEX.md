@@ -20,6 +20,7 @@
 | `MEMORY.md` | Project memory: decisions, mistakes, wins |
 | `ERRORS.md` | Error log and patterns to remember |
 | `SECURITY.md` | Security policy and vulnerability reporting |
+| `META.md` | Meta-guide for agentic coding feedback loops |
 | `INDEX.md` | This file — catalog of all markdown documents |
 
 ---
@@ -36,6 +37,7 @@
 | `docs/DESIGN_DOC.md` | Design document philosophy and constraints |
 | `docs/ANTI_TEST_GAMING.md` | Safeguards against test-gaming code |
 | `docs/TESTING.md` | Atomic and exhaustive testing philosophy |
+| `docs/DEBUGGING.md` | Disciplined debugging workflow for failures |
 | `docs/INTERFACES.md` | Interface contracts between components |
 | `docs/TECHNOLOGY_SELECTION.md` | Technology stack and architecture approval |
 | `docs/adr/README.md` | Architecture Decision Record index |

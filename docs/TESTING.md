@@ -29,6 +29,35 @@ If you cannot reduce a test to a binary pass/fail with a single, precise asserti
 
 ---
 
+## Test-Driven Development (TDD)
+
+This template follows the TDD cycle: **Red → Green → Refactor**.
+
+### The TDD Cycle
+
+1. **Red:** Write an automated test that fails. This proves the test is valid and that the feature is missing.
+2. **Green:** Write the simplest possible code to make the test pass. Hardcoding is acceptable temporarily.
+3. **Refactor:** Clean up the code and tests while keeping all tests green. Remove duplication, improve names, split methods.
+4. **Repeat.**
+
+### TDD Rules While Coding
+
+- **Write a failing test first.** If the test doesn't fail, it isn't testing the right thing.
+- **Write the minimum code to pass.** No code beyond what the test requires.
+- **Refactor only on green.** Never refactor while tests are failing.
+- **Keep tests fast and isolated.** Unit tests should avoid network, database, and process boundaries. Use test doubles for external dependencies.
+- **Commit after each green step.** Small steps make reversion safe when tests fail unexpectedly.
+
+### TDD Anti-Patterns to Avoid
+
+- **False security from green tests.** A large number of passing tests does not guarantee correctness. Continue running the constraint audit and adversarial review.
+- **Testing implementation details.** Tests should specify *what* happens, not *how*. If a test breaks during a valid refactor, it is a bad test.
+- **Slow or interdependent tests.** Tests that depend on each other or on system state create brittle suites and cascading false negatives.
+- **All-knowing oracles.** Tests that inspect more than necessary are expensive and brittle. Assert only what matters.
+- **Neglecting test quality.** Test code is production code. It must be readable, maintainable, and free of hardcoded magic values.
+
+---
+
 ## The Atomic Test Contract
 
 Every test must declare:
